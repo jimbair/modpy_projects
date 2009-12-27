@@ -41,6 +41,11 @@ def cleanUp(string=''):
     if string == '':
         return None
 
+    # Check for long length
+    if len(string) > 100:
+        return None
+
+    # Check for bad chars
     for i in string:
         test = re.search('\w|\.', i)
         if test is None:
