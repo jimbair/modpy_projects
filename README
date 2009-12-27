@@ -1,0 +1,16 @@
+This is a personal project to keep track of any 'small' utilities
+I make come up with, write, or need using mod_python with apache.
+There should only be single files present that are completely
+self contained. Anything larger should get it's own project/repo.
+
+All builds should be stable with the latest Gentoo stable. As of 
+today, that is:
+
+apache-2.2.14-r1
+mod_python-3.3.1-r1
+
+Recommendations to make these better are welcome. This is my first
+attempt to play with mod_python and can use pointers.
+
+James Bair
+james.d.bair@gmail.com
