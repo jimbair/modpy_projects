@@ -42,7 +42,6 @@ def cleanUp(string=''):
         return None
 
     for i in string:
-        test = None
         test = re.search('\w|\.', i)
         if test is None:
             return None
