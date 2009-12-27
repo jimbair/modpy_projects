@@ -32,8 +32,8 @@ def preWrapCommand(string=''):
 
 def cleanUp(string=''):
     """
-    Used to 'clean up' then input given to us by the
-    user. Helpful if keeping away '1337 h4x0rz'.
+    Used to 'clean up' the input given to us by the
+    user. Helpful for keeping away '1337 h4x0rz'.
     If bad input is given, then None is returned.
     Only accepts letters, numbers, and periods.
     """
