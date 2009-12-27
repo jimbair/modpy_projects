@@ -80,7 +80,6 @@ def handler(req):
     if domain is None:
         req.write(whoisForm)
     else:
-        req.write('<br>%s<br>' % (domain,))
         whois = preWrapCommand('whois %s' % (domain,))
         if whois is not False:
             req.write(whois)
