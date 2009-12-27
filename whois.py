@@ -3,26 +3,12 @@
 # with how mod_python works. No framework required,
 # just wanted a simple whois web app using python.
 #
-# v1.0 - Initial coding - 2009-12-27
-#
-# Copyright (C) 2009  James Bair <james.d.bair@gmail.com>
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software Foundation,
-# Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+# James Bair - 2009-12-17
+# v1.0 - Initial coding
 
 import commands
 import os
+import re
 
 from mod_python import apache
 from mod_python import util
@@ -30,7 +16,7 @@ from mod_python import util
 def preWrapCommand(string=''):
     """
     Runs the given command locally on the system.
-    If any errors, False is returned. Otherwise,
+    If any errors, False is returned. Otherwise, 
     the output is returned wrapped in pre tags.
     """
 
@@ -44,11 +30,30 @@ def preWrapCommand(string=''):
     result = '<pre>%s</pre>' % (results[1],)
     return result
 
+def cleanUp(string=''):
+    """
+    Used to 'clean up' input given by the user.
+    Used to keep out h4x0rz. If bad input is given, 
+    then None is returned.
+    Only accepts letters, numbers, and periods.
+    """
+
+    if string == '':
+        return None
+
+    for i in string:
+        test = None
+        test = re.search('\w|\.', i)
+        if test is None:
+            return None
+    
+    return string
+
 def handler(req):
     """
     The mod_python equivalent of main().
     """
-
+    
     # Yucky HTML variables.
     top = "<html><head /><title>Simple Whois Form</title>"
     bottom = "</html>"
@@ -67,6 +72,8 @@ def handler(req):
     formdata = util.FieldStorage(req)
     if 'domain' in formdata:
         domain = formdata['domain']
+        # Sanity checking our input
+        domain = cleanUp(domain)
     else:
         domain = None
 
@@ -74,6 +81,7 @@ def handler(req):
     if domain is None:
         req.write(whoisForm)
     else:
+        req.write('<br>%s<br>' % (domain,))
         whois = preWrapCommand('whois %s' % (domain,))
         if whois is not False:
             req.write(whois)
