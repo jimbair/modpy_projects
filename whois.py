@@ -35,7 +35,7 @@ def cleanUp(string=''):
     Used to 'clean up' the input given to us by the
     user. Helpful for keeping away '1337 h4x0rz'.
     If bad input is given, then None is returned.
-    Only accepts letters, numbers, and periods.
+    Only accepts letters, numbers, dashes and periods.
     """
 
     if string == '':
@@ -47,7 +47,7 @@ def cleanUp(string=''):
 
     # Check for bad chars
     for i in string:
-        test = re.search('\w|\.', i)
+        test = re.search('\w|\.|\-', i)
         if test is None:
             return None
     
